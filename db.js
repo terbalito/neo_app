@@ -1,58 +1,39 @@
 // db.js
-import mariadb from 'mariadb';
-import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Création du pool de connexions
-const pool = mariadb.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASS || '',
-  database: process.env.DB_NAME || 'neo_app',
-  connectionLimit: 5
-});
+// Chemin du fichier JSON
+const dbPath = path.join(__dirname, 'posts.json');
 
-// Fonction utilitaire pour tester la connexion
-export async function testerConnexion() {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    console.log('✅ Connexion à MariaDB réussie');
-  } catch (err) {
-    console.error('❌ Erreur de connexion à MariaDB :', err.message);
-  } finally {
-    if (conn) conn.end();
-  }
+// Vérifie si le fichier existe, sinon crée-le vide
+if (!fs.existsSync(dbPath)) {
+  fs.writeFileSync(dbPath, JSON.stringify([]));
 }
 
-// Insérer un post
+// Fonction pour récupérer les posts (limit optionnel)
+export async function recupererPosts(limit = 100) {
+  const data = fs.readFileSync(dbPath, 'utf-8');
+  const posts = JSON.parse(data);
+  // On renvoie les plus récents en premier
+  return posts.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, limit);
+}
+
+// Fonction pour insérer un post
 export async function insererPost(contenu) {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    await conn.query('INSERT INTO posts (contenu, date_creation) VALUES (?, NOW())', [contenu]);
-  } catch (err) {
-    console.error('❌ Erreur lors de l’insertion :', err.message);
-    throw err;
-  } finally {
-    if (conn) conn.end();
-  }
-}
+  const data = fs.readFileSync(dbPath, 'utf-8');
+  const posts = JSON.parse(data);
 
-// Récupérer les posts récents
-export async function recupererPosts(limit = 50) {
-  let conn;
-  try {
-    conn = await pool.getConnection();
-    const rows = await conn.query('SELECT * FROM posts ORDER BY date_creation DESC LIMIT ?', [limit]);
-    return rows;
-  } catch (err) {
-    console.error('❌ Erreur récupération posts :', err.message);
-    throw err;
-  } finally {
-    if (conn) conn.end();
-  }
+  const newPost = {
+    id: posts.length + 1,
+    contenu,
+    date: new Date().toISOString()
+  };
+
+  posts.push(newPost);
+  fs.writeFileSync(dbPath, JSON.stringify(posts, null, 2));
+  return newPost;
 }
-// Test de connexion
-testerConnexion();
