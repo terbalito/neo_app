@@ -1,0 +1,90 @@
+/* Reset de base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Press Start 2P', cursive; /* Police rétro 80s */
+}
+
+/* Body */
+body {
+  background-color: #f0f0f0;
+  color: #222;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  background-color: #ff00ff;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border: 5px solid #000;
+  box-shadow: 5px 5px 0 #000;
+}
+
+/* Formulaire */
+form {
+  margin: 20px auto;
+  padding: 15px;
+  border: 3px solid #000;
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 6px 6px 0 #000;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  border: 2px solid #000;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #00ffff;
+  border: 2px solid #000;
+  font-family: 'Press Start 2P', cursive;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button:hover {
+  background-color: #ff0;
+}
+
+/* Posts */
+.posts {
+  margin-top: 20px;
+  width: 90%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post {
+  border: 3px solid #000;
+  padding: 10px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  box-shadow: 5px 5px 0 #000;
+}
+
+.post span {
+  display: block;
+  font-size: 10px;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Footer */
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: #222;
+}
