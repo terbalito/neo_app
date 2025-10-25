@@ -59,6 +59,19 @@ app.post('/poster', async (req, res) => {
   }
 });
 
+
+// === Nouvelle route API ===
+app.get('/api/posts', async (req, res) => {
+  try {
+    const posts = await recupererPosts(100);
+    res.json(posts);
+  } catch (err) {
+    console.error('Erreur API récupération posts', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.listen(PORT, () => {
