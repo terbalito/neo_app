@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Neo-Brutal Posts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+  <meta charset="UTF-8">
+  <title>Neo-Brutal Posts</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
 
-  <%- include('partials/header') %>
+  <%- include('partials/header') %>
 
-  <h1>Posts anonymes</h1>
+  <h1>Posts anonymes</h1>
 
-  <form action="/poster" method="POST">
-    <textarea name="contenu" placeholder="Écris ton post..." required></textarea>
-    <button type="submit">Poster</button>
-  </form>
+  <form action="/poster" method="POST">
+    <textarea name="contenu" placeholder="Écris ton post..." required></textarea>
+    <button type="submit">Poster</button>
+  </form>
 
-  <div class="posts">
-    <% posts.forEach(post => { %>
-      <div class="post">
-        <p><%= post.contenu %></p>
-        <span><%= post.date_creation.toLocaleString() %></span>
-      </div>
-    <% }) %>
-  </div>
+  <div class="posts">
+    <% posts.forEach(post => { %>
+      <div class="post">
+        <p><%= post.contenu %></p>
+        <span><%= post.date_creation.toLocaleString() %></span>
+      </div>
+    <% }) %>
+  </div>
 
-  <%- include('partials/footer') %>
+  <%- include('partials/footer') %>
 
 </body>
 </html>
