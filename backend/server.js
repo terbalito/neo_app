@@ -21,7 +21,8 @@ app.use(express.json());
 
 // Autoriser CORS pour le front en local
 app.use(cors({
-  origin: 'http://localhost:3000' // ici ton front
+  origin: 'https://neo-app-1.onrender.com', // en prod
+  credentials: true
 }));
 
 const limiter = rateLimit({
